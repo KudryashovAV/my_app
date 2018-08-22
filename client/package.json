@@ -8,9 +8,9 @@
     }
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "axios": "^0.17.1",
     "react-scripts": "1.1.4"
   },
   "scripts": {
