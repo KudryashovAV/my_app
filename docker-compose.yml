@@ -10,7 +10,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-     - ./client:/app
+     - ./client:/client
   web:
     build: .
     command: ["./bin/docker-dev-server.sh"]

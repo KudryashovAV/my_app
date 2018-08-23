@@ -11,3 +11,5 @@ COPY Gemfile /my_app/Gemfile
 COPY Gemfile.lock /my_app/Gemfile.lock
 RUN bundle install
 COPY . /my_app
+
+EXPOSE 3001

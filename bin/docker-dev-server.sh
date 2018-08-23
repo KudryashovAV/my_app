@@ -10,7 +10,7 @@ wait_for_db() {
       exit 1
     fi
     echo "Trying to connect to Postgres at $postgres_address. Attempt $counter."
-    sleep 5
+    sleep 1
   done
 }
 
