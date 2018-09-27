@@ -11,6 +11,8 @@ COPY public $APP_HOME/public/
 COPY src $APP_HOME/src/
 COPY *.json $APP_HOME/
 
+RUN npm install -g npm@latest
+RUN rm -rf node_modules
 RUN npm install
 
 EXPOSE 3000
