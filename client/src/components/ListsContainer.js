@@ -11,6 +11,7 @@ class ListsContainer extends Component {
       lists: []
     }
     this.addNewList = this.addNewList.bind(this)
+    this.removeList = this.removeList.bind(this)
   }
 
     addNewList(title, excerpt) {
@@ -22,22 +23,31 @@ class ListsContainer extends Component {
                         })
   .catch(error => {
       console.log(error)
-  })
+    })
   }
+
+  removeList(id) {
+                    axios.delete( 'http://localhost:3001/api/v1/lists/' + id )
+                    .then(response => {
+                                        const lists = this.state.lists.filter(list => list.id !== id)
+                                        this.setState({lists})
+                                      })
+                    .catch(error => console.log(error))
+                  }
 
   componentDidMount() {
     axios.get('http://localhost:3001/api/v1/lists.json')
       .then(response => {
-        console.log(response)
-        this.setState({ lists: response.data })
-      })
+                          console.log(response)
+                          this.setState({ lists: response.data })
+                        })
       .catch(error => console.log(error))
   }
   render() {
     return (
       <div className="lists-container">
       <NewListForm onNewList={this.addNewList} />
-      { this.state.lists.map( list => { return (<List list={list} key={list.id} />) }) }
+      { this.state.lists.map( list => { return (<List list={list} key={list.id} onRemoveList={this.removeList} />) }) }
 
   </div>
   )

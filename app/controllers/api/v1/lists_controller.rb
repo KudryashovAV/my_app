@@ -30,7 +30,6 @@ class Api::V1::ListsController < ApplicationController
   end
 
   def destroy
-    @list.destroy
     if @list.destroy
       head :no_content, status: :ok
     else
