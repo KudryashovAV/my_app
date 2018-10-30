@@ -21,28 +21,9 @@ class ListsContainer extends Component {
   constructor(props) {
     super(props)
     this.state = { lists: [], editingListId: null }
-    this.addNewList = this.addNewList.bind(this)
     this.removeList = this.removeList.bind(this)
     this.editingList = this.editingList.bind(this)
     this.editList = this.editList.bind(this)
-  }
-
-  componentDidMount() {
-    axios.get('http://localhost:3001/api/v1/lists')
-    .then(response => {
-      console.log(response)
-      this.setState({ lists: response.data })
-    })
-    .catch(error => console.log(error))
-  }
-
-  addNewList(title, excerpt) {
-    axios.post( 'http://localhost:3001/api/v1/lists', { list: {title, excerpt} })
-    .then(response => {
-      const lists = [ ...this.state.lists, response.data ]
-      this.setState({lists})
-    })
-    .catch(error => console.log(error))
   }
 
   removeList(id) {
@@ -86,7 +67,7 @@ class ListsContainer extends Component {
                   return (<List list={list} key={list.id} onRemoveList={this.removeList} editingList={this.editingList} />)
                 }
               })}
-                <NewListForm onNewList={this.addNewList} />
+                <NewListForm />
             </div>
           )
         }}

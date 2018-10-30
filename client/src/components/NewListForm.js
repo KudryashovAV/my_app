@@ -1,26 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {Mutation} from "react-apollo";
+import gql from 'graphql-tag';
 
-const NewListForm = ({onNewList = f => f}) => {
-  let title, excerpt
-  const submit = e => {
-    e.preventDefault()
-    onNewList(title.value, excerpt.value)
-    title.value = ''
-    excerpt.value = ''
-    title.focus()
+const POST_MUTATION = gql`
+  mutation PostMutation($title: String!, $excerpt: String!) {
+    createList(title: $title, excerpt: $excerpt) {
+      excerpt
+      title
+    }
   }
+`;
 
-  return (
-    <form onSubmit={submit}>
-    <input  ref={input => title = input}
-  type="text"
-  placeholder="Title..." required />
-  <input  ref={input => excerpt = input}
-  type="text"
-  placeholder="Excerpt..." required />
-  <button>Add List</button>
-  </form>
-)
+class NewListForm extends Component {
+  state = { title: '', excerpt: '' };
+
+  render() {
+    const { title, excerpt } = this.state;
+    return (
+      <div>
+        <div className="flex flex-column mt3">
+          <input value={title} onChange={e => this.setState({ title: e.target.value })} type="text" placeholder="Title..." required />
+          <input value={excerpt} onChange={e => this.setState({ excerpt: e.target.value })} type="text" placeholder="Excerpt..." required />
+        </div>
+          <Mutation mutation={POST_MUTATION} variables={{ title, excerpt }}>
+            {postMutation => <button onClick={postMutation}>Add new list</button>}
+          </Mutation>
+      </div>
+    )
+  }
 }
 
 export default NewListForm;
